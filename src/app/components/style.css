@@ -1,0 +1,216 @@
+#header {
+    font-size: xx-large;
+}
+#header::before {
+    content:url("/icons/header_axe.svg");
+    width: 1.5em;
+    display: inline-block;
+    transform: scaleX(-1) rotate(-32deg);
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+}
+
+#header::after {
+    content:url("/icons/header_axe.svg");
+    width: 1.5em;
+    display: inline-block;
+    transform: rotate(-32deg);
+    margin-left: 0.5em;
+}
+
+#general {
+    display: grid;
+    width: auto;
+    margin: 0.5em;
+    grid-template-columns: auto 80%;
+    grid-row-gap: 0.5em;
+}
+
+#general label {
+    margin: auto
+}
+
+
+#general input {
+    margin: 0.5em;
+    font-size: x-large;
+    border-radius:4px;
+}
+
+#attackDice .numericFieldLabel::before {
+    content: url("/icons/hq_skull.svg");
+    display: inline-block;
+    width: 1.5em;
+    margin-right: .5em;
+}
+
+#defendDice .numericFieldLabel::before {
+    content: url("/icons/hq_white_shield.svg");
+    display: inline-block;
+    width: 1.5em;
+    margin-right: .5em;
+}
+
+
+#bodyPoints .numericFieldLabel::before {
+    content: url("/icons/body_points.svg");
+    display: inline-block;
+    width: 1.5em;
+    margin-right: .5em;
+}
+
+#mindPoints .numericFieldLabel::before {
+    content: url("/icons/mind_points.svg");
+    display: inline-block;
+    width: 1.5em;
+    margin-right: .5em;
+}
+
+#goldCoins .numericFieldLabel::before {
+    content: url("/icons/gold_coins.svg");
+    display: inline-block;
+    width: 1.5em;
+    margin-right: .5em;
+}
+
+
+#quests .numericFieldLabel::before {
+    content: url("/icons/quests_scroll.svg");
+    display: inline-block;
+    width: 1.5em;
+    margin-right: .5em;
+}
+
+.numericField {
+    margin: 0.5em;
+}
+
+.numericFieldInput {
+    display: inline-block;
+    font-size: x-large;
+    border-radius:4px;
+    width: 3em;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: center;
+}
+
+.baseNumericFieldInput {
+    display: inline-block;
+    font-size: large;
+    border-radius:4px;
+    width: 2em;
+    vertical-align: bottom;
+    margin-left: -0.5em;
+    text-align: center;
+}
+
+.inputs {
+    display: inline-block;
+}
+
+#characterValues .minus, #characterValues .plus {
+    cursor:pointer;
+    display: inline;
+    padding: 0.9em;
+    margin: 0.5em;
+    border-radius:4px;
+    font-size: 1em;
+}
+
+#inventory ul {
+    display: table;
+}
+
+#inventory ul li {
+    display: table-row;
+}
+
+#inventory ul li div{
+    display: table-cell;
+    padding: 0.5em;
+}
+
+#inventory .quantity button, #inventory .actionButton button {
+    cursor: pointer;
+    border-radius:4px;
+    height: auto;
+    width: 2em;
+    height: 2em;
+    font-size: 1em;
+    text-align: center;
+}
+
+#inventory .item {
+    flex-wrap: wrap;
+    max-width: 80%;
+}
+
+
+#inventory .input-box {
+    width: 3em;
+    text-align: center;
+    border: none;
+    font-size: 1em;
+    outline: none;
+}
+
+#inventory .actionButton {
+    display: table;
+}
+
+#inventory .actionButton > div {
+    display: table-row
+}
+#inventory .actionButton > div > button {
+    display: table-cell;
+}
+
+/* Hide the number input spin buttons */
+
+#characterValues input[type="number"] {
+    -moz-appearance: textfield;
+}
+
+#characterValues input[type="number"]::-webkit-inner-spin-button, #characterValues input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#inventory .input-box::-webkit-inner-spin-button, #inventory .input-box::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#inventory .input-box[type="number"] {
+    -moz-appearance: textfield;
+}
+
+#newItemForm input {
+    display: inline-block;
+    font-size: x-large;
+    border-radius:4px;
+    width: 70%;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    text-align: left;
+}
+
+#newItemForm label {
+    margin-right: .5em;
+    margin-left: .5em;
+    vertical-align: super;
+}
+
+#newItemForm button {
+    padding: 0.5em;
+    margin: 0.5em;
+    vertical-align: super;
+    border-radius:4px;
+}
+
+#notes textarea {
+    margin: 0.5em;
+    width: 95%;
+    height: 25em;
+}

@@ -1,5 +1,6 @@
 'use client'
 import { useState } from "react"
+import CharacterSheet from "./components/character_sheet"
 
 type JSONValue = 
  | string
@@ -19,6 +20,11 @@ export default function Home() {
   return (
     <main>
       <div>
+        <CharacterSheet />
+        <div style={{width: "200px"}}>
+          <img src="body_points.svg" alt="Body Points"/>
+        </div>
+        
         <input type="file" name="file" onChange={async (event) => {
           const fileList = event.target.files
           if (fileList) {
