@@ -1,8 +1,11 @@
 'use client'
 
+import { useDispatch, useSelector } from "react-redux"
 import "./style.css"
 
 import { FC } from "react"
+import GeneralInfo from "./general"
+import CharacterValues from "./character_values"
 
 const NumericFieldWithBase: FC<{
     valueId: string,
@@ -68,13 +71,13 @@ const ActionButton: FC<{ position: ButtonPosition }> = ({ position }) => {
 const Inventory: FC<{}> = ({ }) => {
     return (
         <div id="inventory">
-            <Quantity quantity={9} id={0} />
+            <Quantity quantity={9} />
             <div className="item">Item 123 123 123 123 123 123 123 123 123</div>
             <ActionButton position={ButtonPosition.First} />
-            <Quantity quantity={10} id={1} />
+            <Quantity quantity={10} />
             <div className="item">Item 1</div>
             <ActionButton position={ButtonPosition.Middle} />
-            <Quantity quantity={11} id={2} />
+            <Quantity quantity={11} />
             <div className="item">Item 2</div>
             <ActionButton position={ButtonPosition.Last} />
         </div>);
@@ -86,25 +89,9 @@ export default function CharacterSheet() {
             <section>
                 <h1 id="header">Character sheet</h1>
             </section>
-            <section id="general">
-                <label htmlFor="characterName">Name:</label>
-                <input type="text" id="characterName" name="characterName" />
-                <label htmlFor="characterType">Character:</label>
-                <input type="text" id="characterType" name="characterName" />
-            </section>
+            <GeneralInfo />
             <hr />
-            <section id="characterValues">
-                <div id="characterValuesBase">
-                    <NumericFieldWithBase valueId="attackDice" label="Attack dice:" />
-                    <NumericFieldWithBase valueId="defendDice" label="Defend dice:" />
-                    <NumericFieldWithBase valueId="bodyPoints" label="Body points:" />
-                    <NumericFieldWithBase valueId="mindPoints" label="Mind points:" />
-                </div>
-                <div id="characterValuesFree">
-                    <NumericField valueId="goldCoins" label="Gold coins:" />
-                    <NumericField valueId="quests" label="Quests:" />
-                </div>
-            </section>
+            <CharacterValues />
             <hr />
             <section id="inventorySection">
                 <h1>Inventory</h1>
