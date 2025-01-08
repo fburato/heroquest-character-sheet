@@ -1,8 +1,18 @@
+section {
+    margin: 0.5em;
+}
+
+h1 {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
 #header {
     font-size: xx-large;
 }
+
 #header::before {
-    content:url("/icons/header_axe.svg");
+    content: url("/icons/header_axe.svg");
     width: 1.5em;
     display: inline-block;
     transform: scaleX(-1) rotate(-32deg);
@@ -11,7 +21,7 @@
 }
 
 #header::after {
-    content:url("/icons/header_axe.svg");
+    content: url("/icons/header_axe.svg");
     width: 1.5em;
     display: inline-block;
     transform: rotate(-32deg);
@@ -24,27 +34,33 @@
     margin: 0.5em;
     grid-template-columns: auto 80%;
     grid-row-gap: 0.5em;
+    place-content: start left;
 }
 
 #general label {
-    margin: auto
+    margin: auto 0 auto auto;
 }
 
 
 #general input {
     margin: 0.5em;
     font-size: x-large;
-    border-radius:4px;
+    border-radius: 4px;
 }
 
-#attackDice .numericFieldLabel::before {
+#characterValues .numericFieldLabel {
+    display: flex;
+    align-items: center;
+}
+
+#attackDiceLabel::before {
     content: url("/icons/hq_skull.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
 }
 
-#defendDice .numericFieldLabel::before {
+#defendDiceLabel::before {
     content: url("/icons/hq_white_shield.svg");
     display: inline-block;
     width: 1.5em;
@@ -52,21 +68,21 @@
 }
 
 
-#bodyPoints .numericFieldLabel::before {
+#bodyPointsLabel::before {
     content: url("/icons/body_points.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
 }
 
-#mindPoints .numericFieldLabel::before {
+#mindPointsLabel::before {
     content: url("/icons/mind_points.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
 }
 
-#goldCoins .numericFieldLabel::before {
+#goldCoinsLabel::before {
     content: url("/icons/gold_coins.svg");
     display: inline-block;
     width: 1.5em;
@@ -74,7 +90,7 @@
 }
 
 
-#quests .numericFieldLabel::before {
+#questsLabel::before {
     content: url("/icons/quests_scroll.svg");
     display: inline-block;
     width: 1.5em;
@@ -88,7 +104,7 @@
 .numericFieldInput {
     display: inline-block;
     font-size: x-large;
-    border-radius:4px;
+    border-radius: 4px;
     width: 3em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
@@ -98,7 +114,7 @@
 .baseNumericFieldInput {
     display: inline-block;
     font-size: large;
-    border-radius:4px;
+    border-radius: 4px;
     width: 2em;
     vertical-align: bottom;
     margin-left: -0.5em;
@@ -109,31 +125,37 @@
     display: inline-block;
 }
 
-#characterValues .minus, #characterValues .plus {
-    cursor:pointer;
+#characterValuesBase {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    place-content: center left;
+}
+
+#characterValuesBase .minus,
+#characterValuesBase .plus {
+    cursor: pointer;
     display: inline;
     padding: 0.9em;
     margin: 0.5em;
-    border-radius:4px;
+    border-radius: 4px;
     font-size: 1em;
 }
 
-#inventory ul {
-    display: table;
+#characterValues .numericFieldLabel {
+    grid-column: 1 / span 3;
 }
 
-#inventory ul li {
-    display: table-row;
+#inventory {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto auto;
+    place-content: center left;
+    grid-row-gap: 0.5em;
 }
 
-#inventory ul li div{
-    display: table-cell;
-    padding: 0.5em;
-}
-
-#inventory .quantity button, #inventory .actionButton button {
+#inventory button,
+#inventory .actionButton button {
     cursor: pointer;
-    border-radius:4px;
+    border-radius: 4px;
     height: auto;
     width: 2em;
     height: 2em;
@@ -143,7 +165,8 @@
 
 #inventory .item {
     flex-wrap: wrap;
-    max-width: 80%;
+    max-width: 20em;
+    margin: auto .5em auto .5em;
 }
 
 
@@ -153,17 +176,7 @@
     border: none;
     font-size: 1em;
     outline: none;
-}
-
-#inventory .actionButton {
-    display: table;
-}
-
-#inventory .actionButton > div {
-    display: table-row
-}
-#inventory .actionButton > div > button {
-    display: table-cell;
+    margin: 0.3em auto auto auto;
 }
 
 /* Hide the number input spin buttons */
@@ -172,12 +185,14 @@
     -moz-appearance: textfield;
 }
 
-#characterValues input[type="number"]::-webkit-inner-spin-button, #characterValues input[type="number"]::-webkit-outer-spin-button {
+#characterValues input[type="number"]::-webkit-inner-spin-button,
+#characterValues input[type="number"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
-#inventory .input-box::-webkit-inner-spin-button, #inventory .input-box::-webkit-outer-spin-button {
+#inventory .input-box::-webkit-inner-spin-button,
+#inventory .input-box::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
@@ -189,28 +204,33 @@
 #newItemForm input {
     display: inline-block;
     font-size: x-large;
-    border-radius:4px;
-    width: 70%;
+    border-radius: 4px;
+    max-width: 20em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     text-align: left;
 }
 
+#newItemForm {
+    display: flex;
+}
+
 #newItemForm label {
-    margin-right: .5em;
-    margin-left: .5em;
-    vertical-align: super;
+    margin: auto .5em auto .5em;
 }
 
 #newItemForm button {
     padding: 0.5em;
     margin: 0.5em;
     vertical-align: super;
-    border-radius:4px;
+    border-radius: 4px;
+}
+
+#notes {
+    display: flex;
+    flex-direction: column;
 }
 
 #notes textarea {
-    margin: 0.5em;
-    width: 95%;
-    height: 25em;
+    height: 20em;
 }
