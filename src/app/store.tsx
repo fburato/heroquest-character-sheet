@@ -1,4 +1,4 @@
-import { combineReducers, configureStore, Reducer } from "@reduxjs/toolkit";
+import { combineReducers, configureStore, createSlice, Reducer, Slice } from "@reduxjs/toolkit";
 import { reducer as generalReducer } from './components/general'
 import { reducer as characterValuesReducer } from './components/character_values'
 import { reducer as inventoryReducer } from './components/inventory'
@@ -20,7 +20,7 @@ export interface SummarisedState {
 interface Store {
     general: GeneralState,
     characterValues: CharacterValues,
-    summary?: SummarisedState,
+    summary: SummarisedState,
     inventory: InventoryState
     notes: NotesState
 }
@@ -58,20 +58,18 @@ const defaultSummary = (): SummarisedState => {
     }
 }
 
+const dummySummaryReducer: Slice<SummarisedState> = createSlice({
+    name: "summary",
+    initialState: defaultSummary(),
+    reducers: {}
+})
+
 const rootReducer: Reducer<Store> = combineReducers({
     general: generalReducer,
     characterValues: characterValuesReducer,
     inventory: inventoryReducer,
     notes: notesReducer,
-    summary: (): SummarisedState => {
-        return {
-            name: "",
-            character: "",
-            characterValues: defaultCharacterValues(),
-            items: [],
-            notes: ""
-        }
-    },
+    summary: dummySummaryReducer.reducer,
 })
 
 const summaryFromStore = (store: Store): SummarisedState => {
@@ -123,7 +121,7 @@ const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
         }
         return store
     }
-    const calculatedState = rootReducer(state ? { ...state, summary: undefined } : undefined, action)
+    const calculatedState = rootReducer(state ? { ...state, summary: defaultSummary() } : undefined, action)
     const summary = summaryFromStore(calculatedState)
     if (typeof window !== "undefined") {
         window.localStorage.setItem(savedState, JSON.stringify(summary))

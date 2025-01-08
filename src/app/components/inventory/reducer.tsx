@@ -17,12 +17,15 @@ export interface IndexedPayloadWithValue {
     index: number,
     value: number,
 }
-const inventorySlice: Slice<InventoryState> = createSlice({
-    name: "inventory",
-    initialState: {
+const defaultInvetory = (): InventoryState => {
+    return {
         items: [],
         newItemValue: ""
-    },
+    }
+}
+const inventorySlice: Slice<InventoryState> = createSlice({
+    name: "inventory",
+    initialState: defaultInvetory(),
     reducers: {
         increaseItemQuantity: (state: InventoryState, action: PayloadAction<IndexedPayload>) => {
             const index = action.payload.index
