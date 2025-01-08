@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { changeCharacter, changeName, GeneralState } from "./reducer";
 
-const GeneralInfo: FC<{}> = ({ }) => {
+const GeneralInfo: FC<unknown> = () => {
     const characterName = useSelector<{ general: GeneralState }, string>(state => state.general.name)
     const characterKind = useSelector<{ general: GeneralState }, string>(state => state.general.character)
     const dispatch = useDispatch()

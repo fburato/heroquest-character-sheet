@@ -1,13 +1,14 @@
-import { combineReducers, configureStore, createSlice, Reducer, Slice, UnknownAction } from "@reduxjs/toolkit";
-import { reducer as generalReducer, actions as generalActions } from './components/general'
-import { reducer as characterValuesReducer, actions as characterValuesActions } from './components/character_values'
-import { reducer as inventoryReducer, actions as inventoryActions } from './components/inventory'
-import { reducer as notesReducer, actions as notesActions } from './components/notes'
+import { combineReducers, configureStore, Reducer } from "@reduxjs/toolkit";
+import { reducer as generalReducer } from './components/general'
+import { reducer as characterValuesReducer } from './components/character_values'
+import { reducer as inventoryReducer } from './components/inventory'
+import { reducer as notesReducer } from './components/notes'
 import { GeneralState } from "./components/general/reducer";
 import { CharacterValues } from "./components/character_values/reducer";
 import { InventoryState, Item } from "./components/inventory/reducer";
 import { NotesState } from "./components/notes/reducer";
 import { loadAction } from "./reducer";
+import { savedState } from "./constants";
 export interface SummarisedState {
     name: string,
     character: string,
@@ -47,12 +48,22 @@ const defaultCharacterValues = () => {
     }
 }
 
+const defaultSummary = (): SummarisedState => {
+    return {
+        name: "",
+        character: "",
+        characterValues: defaultCharacterValues(),
+        items: [],
+        notes: ""
+    }
+}
+
 const rootReducer: Reducer<Store> = combineReducers({
     general: generalReducer,
     characterValues: characterValuesReducer,
     inventory: inventoryReducer,
     notes: notesReducer,
-    summary: (state: SummarisedState | undefined, action: UnknownAction): SummarisedState => {
+    summary: (): SummarisedState => {
         return {
             name: "",
             character: "",
@@ -73,9 +84,28 @@ const summaryFromStore = (store: Store): SummarisedState => {
     }
 }
 
+const storeFromSummary = (summary: SummarisedState): Store => {
+    return {
+        general: {
+            name: summary.name,
+            character: summary.character
+        },
+        characterValues: summary.characterValues,
+        inventory: {
+            items: summary.items,
+            newItemValue: ""
+        },
+        notes: {
+            text: summary.notes
+        },
+        summary: summary
+    }
+}
+
 const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
     if (loadAction.match(action)) {
         const actionState = action.payload
+        window.localStorage.setItem(savedState, JSON.stringify(actionState))
         const store: Store = {
             general: {
                 name: actionState.name ? actionState.name : "",
@@ -95,6 +125,9 @@ const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
     }
     const calculatedState = rootReducer(state ? { ...state, summary: undefined } : undefined, action)
     const summary = summaryFromStore(calculatedState)
+    if (typeof window !== "undefined") {
+        window.localStorage.setItem(savedState, JSON.stringify(summary))
+    }
     const updated = {
         ...calculatedState,
         summary: summary
@@ -102,7 +135,60 @@ const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
     return updated
 }
 
+const storeFromLocalStorage = (): SummarisedState => {
+    if (typeof window === "undefined") {
+        return defaultSummary()
+    }
+    const state: string | null = window.localStorage.getItem(savedState)
+    //eslint-disable-next-line  @typescript-eslint/no-explicit-any
+    const isItem = (value: any): boolean => {
+        if (value.qty && value.description && typeof value.qty === "number" && typeof value.description === "string") {
+            return true
+        } else {
+            return false
+        }
+    }
+    if (state) {
+        try {
+            const parsedState = JSON.parse(state)
+            return {
+                name: parsedState.name ? parsedState.name : "",
+                character: parsedState.character ? parsedState.character : "",
+                characterValues: parsedState.characterValues ? {
+                    attackDice: {
+                        value: parsedState.characterValues?.attackDice?.value ? parsedState.characterValues.attackDice.value : 0,
+                        baseValue: parsedState.characterValues?.attackDice?.baseValue ? parsedState.characterValues.attackDice.baseValue : 0,
+                    },
+                    defendDice: {
+                        value: parsedState.characterValues?.defendDice?.value ? parsedState.characterValues.defendDice.value : 0,
+                        baseValue: parsedState.characterValues?.defendDice?.baseValue ? parsedState.characterValues.defendDice.baseValue : 0,
+                    },
+                    bodyPoints: {
+                        value: parsedState.characterValues?.bodyPoints?.value ? parsedState.characterValues.bodyPoints.value : 0,
+                        baseValue: parsedState.characterValues?.bodyPoints?.baseValue ? parsedState.characterValues.bodyPoints.baseValue : 0,
+                    },
+                    mindPoints: {
+                        value: parsedState.characterValues?.mindPoints?.value ? parsedState.characterValues.mindPoints.value : 0,
+                        baseValue: parsedState.characterValues?.mindPoints?.baseValue ? parsedState.characterValues.mindPoints.baseValue : 0,
+                    },
+                    goldCoins: parsedState.characterValues?.goldCoins ? parsedState.characterValues.goldCoins : 0,
+                    quests: parsedState.characterValues?.quests ? parsedState.characterValues.quests : 0,
+                } : defaultCharacterValues(),
+                //eslint-disable-next-line  @typescript-eslint/no-explicit-any
+                items: parsedState.items && parsedState.items.constructor === Array<any> ? (parsedState.items as Array<any>).filter(isItem).map(i => { return { qty: i.qty, description: i.description } }) : [],
+                notes: parsedState.notes ? parsedState.notes : ""
+            }
+        } catch (e) {
+            console.error(e)
+            return defaultSummary()
+        }
+    } else {
+        return defaultSummary()
+    }
+}
+
 const store = configureStore<Store>({
-    reducer: summaryReducer
+    reducer: summaryReducer,
+    preloadedState: storeFromSummary(storeFromLocalStorage())
 })
 export default store

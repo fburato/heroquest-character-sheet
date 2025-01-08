@@ -57,7 +57,7 @@ const InventoryEntry: FC<{ index: number, item: Item, position: ButtonPosition, 
     )
 }
 
-//eslint-disable-next-line  @typescript-eslint/no-empty-object-type
+
 const Inventory: FC<{ inventoryItems: Array<Item>, dispatch: Dispatch }> = ({ inventoryItems, dispatch }) => {
     return (
         <div id="inventory">
@@ -68,7 +68,7 @@ const Inventory: FC<{ inventoryItems: Array<Item>, dispatch: Dispatch }> = ({ in
         </div>);
 }
 
-const InventoryComponent: FC<{}> = ({ }) => {
+const InventoryComponent: FC<unknown> = () => {
     const inventory = useSelector<{ inventory: InventoryState }, InventoryState>(state => state.inventory)
     const dispatch = useDispatch()
     return (

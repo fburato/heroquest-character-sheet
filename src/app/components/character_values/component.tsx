@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { useDispatch, useSelector, useStore } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { changeAttackDiceBaseValue, changeAttackDiceValue, changeBodyPointsBaseValue, changeBodyPointsValue, changeDefendDiceBaseValue, changeDefendDiceValue, changeGoldCoinsValue, changeMindPointsBaseValue, changeMindPointsValue, changeQuestsValue, CharacterValues, decreaseAttackDiceValue, decreaseBodyPointsValue, decreaseDefendDiceValue, decreaseMindPointsValue, increaseAttackDiceValue, increaseBodyPointsValue, increaseDefendDiceValue, increaseMindPointsValue } from "./reducer"
 
 
@@ -49,7 +49,7 @@ const NumericField: FC<{ valueId: string, label: string, value: number, onChange
     )
 }
 
-const CharacterValuesComponent: FC<{}> = ({ }) => {
+const CharacterValuesComponent: FC<unknown> = () => {
     const characterValues = useSelector<{ characterValues: CharacterValues }, CharacterValues>(state => state.characterValues)
     const dispatch = useDispatch()
     return (

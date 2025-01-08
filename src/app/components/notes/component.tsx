@@ -2,7 +2,7 @@ import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NotesState, updateNotes } from "./reducer";
 
-const NotesSection: FC<{}> = ({ }) => {
+const NotesSection: FC<unknown> = () => {
     const text = useSelector<{ notes: NotesState }, string>(state => state.notes.text)
     const dispatch = useDispatch()
     return (

@@ -1,22 +1,10 @@
 'use client'
-import React, { FC, useState } from "react"
+import React, { FC } from "react"
 import CharacterSheet from "./components/character_sheet"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import store from './store'
 import { SummarisedState } from "./store"
 import { loadAction } from "./reducer"
-
-type JSONValue =
-  | string
-  | number
-  | boolean
-  | null
-  | JSONValue[]
-  | { [key: string]: JSONValue }
-
-// interface JSONObject {
-//   [k: string]: JSONValue
-// }
 
 const App: FC<unknown> = () => {
   const summary = useSelector<{ summary: SummarisedState }>(state => state.summary)
@@ -41,9 +29,6 @@ const App: FC<unknown> = () => {
           }} />
         </div>
       </div>
-      {/* <div>
-        {!fileContent ? (<p>File not read yet</p>) : (<div><p>File content:</p><p>{JSON.stringify(fileContent)}</p></div>)}
-      </div> */}
     </div>
   </main>)
 }
