@@ -1,6 +1,7 @@
 import { FC } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { changeAttackDiceBaseValue, changeAttackDiceValue, changeBodyPointsBaseValue, changeBodyPointsValue, changeDefendDiceBaseValue, changeDefendDiceValue, changeGoldCoinsValue, changeMindPointsBaseValue, changeMindPointsValue, changeQuestsValue, CharacterValues, decreaseAttackDiceValue, decreaseBodyPointsValue, decreaseDefendDiceValue, decreaseMindPointsValue, increaseAttackDiceValue, increaseBodyPointsValue, increaseDefendDiceValue, increaseMindPointsValue } from "./reducer"
+import { getLocalisedMessages } from "../lang"
 
 
 const NumericFieldWithBase: FC<{
@@ -50,6 +51,7 @@ const NumericField: FC<{ valueId: string, label: string, value: number, onChange
 }
 
 const CharacterValuesComponent: FC<unknown> = () => {
+    const messages = getLocalisedMessages()
     const characterValues = useSelector<{ characterValues: CharacterValues }, CharacterValues>(state => state.characterValues)
     const dispatch = useDispatch()
     return (
@@ -59,7 +61,7 @@ const CharacterValuesComponent: FC<unknown> = () => {
                     value={characterValues.attackDice.value}
                     baseValue={characterValues.attackDice.baseValue}
                     valueId="attackDice"
-                    label="Attack dice:"
+                    label={messages["characterValues.attackDice.label"]}
                     onChangeHandler={(num) => dispatch(changeAttackDiceValue(num))}
                     plusHandler={() => dispatch(increaseAttackDiceValue(null))}
                     minusHandler={() => dispatch(decreaseAttackDiceValue(null))}
@@ -69,7 +71,7 @@ const CharacterValuesComponent: FC<unknown> = () => {
                     value={characterValues.defendDice.value}
                     baseValue={characterValues.defendDice.baseValue}
                     valueId="defendDice"
-                    label="Defend dice:"
+                    label={messages["characterValues.defendDice.label"]}
                     onChangeHandler={(num) => dispatch(changeDefendDiceValue(num))}
                     plusHandler={() => dispatch(increaseDefendDiceValue(null))}
                     minusHandler={() => dispatch(decreaseDefendDiceValue(null))}
@@ -79,7 +81,7 @@ const CharacterValuesComponent: FC<unknown> = () => {
                     value={characterValues.bodyPoints.value}
                     baseValue={characterValues.bodyPoints.baseValue}
                     valueId="bodyPoints"
-                    label="Body points:"
+                    label={messages["characterValues.bodyPoints.label"]}
                     onChangeHandler={(num) => dispatch(changeBodyPointsValue(num))}
                     plusHandler={() => dispatch(increaseBodyPointsValue(null))}
                     minusHandler={() => dispatch(decreaseBodyPointsValue(null))}
@@ -89,7 +91,7 @@ const CharacterValuesComponent: FC<unknown> = () => {
                     value={characterValues.mindPoints.value}
                     baseValue={characterValues.mindPoints.baseValue}
                     valueId="mindPoints"
-                    label="Mind points:"
+                    label={messages["characterValues.mindPoints.label"]}
                     onChangeHandler={(num) => dispatch(changeMindPointsValue(num))}
                     plusHandler={() => dispatch(increaseMindPointsValue(null))}
                     minusHandler={() => dispatch(decreaseMindPointsValue(null))}
@@ -97,8 +99,14 @@ const CharacterValuesComponent: FC<unknown> = () => {
                 />
             </div>
             <div id="characterValuesFree">
-                <NumericField value={characterValues.goldCoins} valueId="goldCoins" label="Gold coins:" onChangeHandler={(num) => dispatch(changeGoldCoinsValue(num))} />
-                <NumericField value={characterValues.quests} valueId="quests" label="Quests:" onChangeHandler={(num) => dispatch(changeQuestsValue(num))} />
+                <NumericField
+                    value={characterValues.goldCoins} valueId="goldCoins"
+                    label={messages["characterValues.goldCoins.label"]}
+                    onChangeHandler={(num) => dispatch(changeGoldCoinsValue(num))} />
+                <NumericField
+                    value={characterValues.quests}
+                    valueId="quests" label={messages["characterValues.quests.label"]}
+                    onChangeHandler={(num) => dispatch(changeQuestsValue(num))} />
             </div>
         </section>
     )

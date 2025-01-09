@@ -2,6 +2,7 @@ import { FC } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { increaseItemQuantity, decreaseItemQuantity, moveItemUp, moveItemDown, addNewItem, InventoryState, Item, deleteItem, newItemValueChange, changeItemQuantity } from "./reducer";
 import { Dispatch } from "@reduxjs/toolkit";
+import { getLocalisedMessages } from "../lang";
 
 const Quantity: FC<{ quantity: number, index: number, dispatch: Dispatch }> = ({ quantity, index, dispatch }) => {
     return (
@@ -69,21 +70,22 @@ const Inventory: FC<{ inventoryItems: Array<Item>, dispatch: Dispatch }> = ({ in
 }
 
 const InventoryComponent: FC<unknown> = () => {
+    const message = getLocalisedMessages()
     const inventory = useSelector<{ inventory: InventoryState }, InventoryState>(state => state.inventory)
     const dispatch = useDispatch()
     return (
         <section id="inventorySection">
-            <h1>Inventory</h1>
+            <h1>{message["inventory.header"]}</h1>
             <Inventory inventoryItems={inventory.items} dispatch={dispatch} />
             <div id="newItemForm">
-                <label htmlFor="newItem">New Item:</label>
+                <label htmlFor="newItem">{message["inventory.newItem.label"]}</label>
                 <input type="text" id="newItem" name="newItem" value={inventory.newItemValue} onChange={(event) => dispatch(newItemValueChange(event.target.value))} />
                 <button aria-label="Add item" onClick={() => {
                     if (inventory.newItemValue) {
                         dispatch(addNewItem(inventory.newItemValue))
                         dispatch(newItemValueChange(""))
                     }
-                }}>Add</button>
+                }}>{message["inventory.newItemButton.label"]}</button>
             </div>
         </section>
     )

@@ -233,3 +233,7 @@ h1 {
 #notes textarea {
     height: 20em;
 }
+
+.uploadButton label {
+    margin-right: .5em;
+}
