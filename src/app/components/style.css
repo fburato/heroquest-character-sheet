@@ -8,12 +8,12 @@ h1 {
 }
 
 #header {
-    font-size: xx-large;
+    font-size: x-large;
 }
 
 #header::before {
     content: url("/heroquest-character-sheet/icons/header_axe.svg");
-    width: 1.5em;
+    width: 2em;
     display: inline-block;
     transform: scaleX(-1) rotate(-32deg);
     margin-right: 0.5em;
@@ -22,7 +22,7 @@ h1 {
 
 #header::after {
     content: url("/heroquest-character-sheet/icons/header_axe.svg");
-    width: 1.5em;
+    width: 2em;
     display: inline-block;
     transform: rotate(-32deg);
     margin-left: 0.5em;
@@ -203,9 +203,9 @@ h1 {
 
 #newItemForm input {
     display: inline-block;
-    font-size: x-large;
+    font-size: large;
     border-radius: 4px;
-    max-width: 20em;
+    max-width: 10em;
     margin-top: 0.5em;
     margin-bottom: 0.5em;
     text-align: left;
