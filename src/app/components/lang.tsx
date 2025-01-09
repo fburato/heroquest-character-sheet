@@ -58,7 +58,7 @@ const translations: Translations = {
     }
 }
 
-var locale = "en"
+let locale = "en"
 if (typeof navigator !== "undefined") {
     const navigatorLocale = navigator.language
     if (navigatorLocale.toLowerCase().includes("it")) {
@@ -69,7 +69,7 @@ if (typeof navigator !== "undefined") {
 if (typeof document !== "undefined" && typeof document.location !== "undefined" && typeof document.location.search !== "undefined") {
     const searchParams = new URLSearchParams(document.location.search)
     const localeParam = searchParams.get("locale")
-    if (localeParam && localeParam.includes("it")) {
+    if (localeParam && localeParam.toLowerCase().includes("it")) {
         locale = "it"
     }
 }

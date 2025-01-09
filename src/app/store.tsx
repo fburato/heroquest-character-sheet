@@ -101,6 +101,7 @@ const storeFromSummary = (summary: SummarisedState): Store => {
 }
 
 const parseSummary = (value: string): SummarisedState => {
+    //eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const isItem = (value: any): boolean => {
         if (value.qty && value.description && typeof value.qty === "number" && typeof value.description === "string") {
             return true
