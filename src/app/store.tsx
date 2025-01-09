@@ -100,25 +100,68 @@ const storeFromSummary = (summary: SummarisedState): Store => {
     }
 }
 
+const parseSummary = (value: string): SummarisedState => {
+    const isItem = (value: any): boolean => {
+        if (value.qty && value.description && typeof value.qty === "number" && typeof value.description === "string") {
+            return true
+        } else {
+            return false
+        }
+    }
+    try {
+        const parsedState = JSON.parse(value)
+        return {
+            name: parsedState.name ? parsedState.name : "",
+            character: parsedState.character ? parsedState.character : "",
+            characterValues: parsedState.characterValues ? {
+                attackDice: {
+                    value: parsedState.characterValues?.attackDice?.value ? parsedState.characterValues.attackDice.value : 0,
+                    baseValue: parsedState.characterValues?.attackDice?.baseValue ? parsedState.characterValues.attackDice.baseValue : 0,
+                },
+                defendDice: {
+                    value: parsedState.characterValues?.defendDice?.value ? parsedState.characterValues.defendDice.value : 0,
+                    baseValue: parsedState.characterValues?.defendDice?.baseValue ? parsedState.characterValues.defendDice.baseValue : 0,
+                },
+                bodyPoints: {
+                    value: parsedState.characterValues?.bodyPoints?.value ? parsedState.characterValues.bodyPoints.value : 0,
+                    baseValue: parsedState.characterValues?.bodyPoints?.baseValue ? parsedState.characterValues.bodyPoints.baseValue : 0,
+                },
+                mindPoints: {
+                    value: parsedState.characterValues?.mindPoints?.value ? parsedState.characterValues.mindPoints.value : 0,
+                    baseValue: parsedState.characterValues?.mindPoints?.baseValue ? parsedState.characterValues.mindPoints.baseValue : 0,
+                },
+                goldCoins: parsedState.characterValues?.goldCoins ? parsedState.characterValues.goldCoins : 0,
+                quests: parsedState.characterValues?.quests ? parsedState.characterValues.quests : 0,
+            } : defaultCharacterValues(),
+            //eslint-disable-next-line  @typescript-eslint/no-explicit-any
+            items: parsedState.items && parsedState.items.constructor === Array<any> ? (parsedState.items as Array<any>).filter(isItem).map(i => { return { qty: i.qty, description: i.description } }) : [],
+            notes: parsedState.notes ? parsedState.notes : ""
+        }
+    } catch (e) {
+        console.error(e)
+        return defaultSummary()
+    }
+}
+
 const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
     if (loadAction.match(action)) {
-        const actionState = action.payload
-        
+
+        const actionState = parseSummary(action.payload)
         if (typeof window !== "undefined") {
             window.localStorage.setItem(savedState, JSON.stringify(actionState))
         }
         const store: Store = {
             general: {
-                name: actionState.name ? actionState.name : "",
-                character: actionState.character ? actionState.character : "",
+                name: actionState.name,
+                character: actionState.character,
             },
-            characterValues: actionState.characterValues ? actionState.characterValues : defaultCharacterValues(),
+            characterValues: actionState.characterValues,
             inventory: {
-                items: actionState.items ? actionState.items : [],
+                items: actionState.items,
                 newItemValue: ""
             },
             notes: {
-                text: actionState.notes ? actionState.notes : ""
+                text: actionState.notes
             },
             summary: actionState
         }

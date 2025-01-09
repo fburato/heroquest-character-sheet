@@ -22,10 +22,10 @@ const NumericFieldWithBase: FC<{
             <div className="fields">
                 <input type="number" min={0} id={valueId + "Value"} name={valueId + "Value"} className="numericFieldInput" value={value} onChange={(event) => {
                     onChangeHandler(event.target.valueAsNumber)
-                }} />
+                }} onFocus={(event) => event.target.select()} />
                 <input type="number" min={0} id={valueId + "Base"} name={valueId + "Base"} className="baseNumericFieldInput" value={baseValue} onChange={(event) => {
                     onBaseChangeHandler(event.target.valueAsNumber)
-                }} />
+                }} onFocus={(event) => event.target.select()} />
             </div>
             <button className="plus" onClick={plusHandler}>+</button>
         </>
@@ -42,7 +42,7 @@ const NumericField: FC<{ valueId: string, label: string, value: number, onChange
                 <div className="inputs">
                     <input value={value} min={0} type="number" id={valueId + "Value"} name={valueId + "Value"} className="numericFieldInput" onChange={(event) => {
                         onChangeHandler(event.target.valueAsNumber)
-                    }} />
+                    }} onFocus={(event) => event.target.select()} />
                 </div>
             </div>
         </>

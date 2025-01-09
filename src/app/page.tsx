@@ -25,9 +25,14 @@ const App: FC<unknown> = () => {
             if (fileList && event.target.value) {
               setFileValue(event.target.value)
               const [file] = fileList
-              const fileContent = await file.text()
-              dispatch(loadAction(JSON.parse(fileContent) as SummarisedState))
-              setFileValue("")
+              try {
+                const fileContent = await file.text()
+                dispatch(loadAction(fileContent))
+              } catch (e) {
+                console.log(e)
+              } finally {
+                setFileValue("")
+              }
             }
           }} value={fileValue} />
         </div>

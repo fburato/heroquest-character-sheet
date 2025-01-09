@@ -12,7 +12,7 @@ const Quantity: FC<{ quantity: number, index: number, dispatch: Dispatch }> = ({
                 if (value >= 0) {
                     dispatch(changeItemQuantity({ index: index, value: value }))
                 }
-            }} />
+            }} onFocus={(event) => event.target.select()} />
             <button className="plus" aria-label="Increase" onClick={() => dispatch(increaseItemQuantity({ index: index }))}>+</button>
         </>
     )
@@ -81,6 +81,7 @@ const InventoryComponent: FC<unknown> = () => {
                 <button aria-label="Add item" onClick={() => {
                     if (inventory.newItemValue) {
                         dispatch(addNewItem(inventory.newItemValue))
+                        dispatch(newItemValueChange(""))
                     }
                 }}>Add</button>
             </div>
