@@ -12,7 +12,7 @@ h1 {
 }
 
 #header::before {
-    content: url("/icons/header_axe.svg");
+    content: url("/heroquest-character-sheet/icons/header_axe.svg");
     width: 1.5em;
     display: inline-block;
     transform: scaleX(-1) rotate(-32deg);
@@ -21,7 +21,7 @@ h1 {
 }
 
 #header::after {
-    content: url("/icons/header_axe.svg");
+    content: url("/heroquest-character-sheet/icons/header_axe.svg");
     width: 1.5em;
     display: inline-block;
     transform: rotate(-32deg);
@@ -54,14 +54,14 @@ h1 {
 }
 
 #attackDiceLabel::before {
-    content: url("/icons/hq_skull.svg");
+    content: url("/heroquest-character-sheet/icons/hq_skull.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
 }
 
 #defendDiceLabel::before {
-    content: url("/icons/hq_white_shield.svg");
+    content: url("/heroquest-character-sheet/icons/hq_white_shield.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
@@ -69,21 +69,21 @@ h1 {
 
 
 #bodyPointsLabel::before {
-    content: url("/icons/body_points.svg");
+    content: url("/heroquest-character-sheet/icons/body_points.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
 }
 
 #mindPointsLabel::before {
-    content: url("/icons/mind_points.svg");
+    content: url("/heroquest-character-sheet/icons/mind_points.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
 }
 
 #goldCoinsLabel::before {
-    content: url("/icons/gold_coins.svg");
+    content: url("/heroquest-character-sheet/icons/gold_coins.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
@@ -91,7 +91,7 @@ h1 {
 
 
 #questsLabel::before {
-    content: url("/icons/quests_scroll.svg");
+    content: url("/heroquest-character-sheet/icons/quests_scroll.svg");
     display: inline-block;
     width: 1.5em;
     margin-right: .5em;
