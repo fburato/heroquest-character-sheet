@@ -59,18 +59,19 @@ const translations: Translations = {
 }
 
 let locale = "en"
-if (typeof navigator !== "undefined") {
-    const navigatorLocale = navigator.language
-    if (navigatorLocale.toLowerCase().includes("it")) {
-        locale = "it"
-    }
-}
 
 if (typeof document !== "undefined" && typeof document.location !== "undefined" && typeof document.location.search !== "undefined") {
     const searchParams = new URLSearchParams(document.location.search)
     const localeParam = searchParams.get("locale")
     if (localeParam && localeParam.toLowerCase().includes("it")) {
         locale = "it"
+    }
+} else if (typeof navigator !== "undefined") {
+    const navigatorLocale = navigator.language
+    if (navigatorLocale.toLowerCase().includes("it")) {
+        locale = "it"
+    } else {
+        locale = "en"
     }
 }
 
