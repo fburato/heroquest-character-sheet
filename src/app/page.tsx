@@ -1,5 +1,5 @@
 'use client'
-import React, { FC, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import CharacterSheet from "./components/character_sheet"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import store from './store'
@@ -9,15 +9,25 @@ import { getLocalisedMessages } from "./components/lang"
 
 const App: FC<unknown> = () => {
   const messages = getLocalisedMessages()
-  const summary = useSelector<{ summary: SummarisedState }>(state => state.summary)
+  const summary: string = useSelector<{ summary: SummarisedState }>(state => JSON.stringify(state.summary)) as string
   const dispatch = useDispatch()
   const [fileValue, setFileValue] = useState<string>("")
+  const [sheet, setSheet] = useState<string>("state")
+  useEffect(() => {
+    if (typeof document !== "undefined" && typeof document.location !== "undefined" && typeof document.location.search !== "undefined") {
+      const searchParams = new URLSearchParams(document.location.search)
+      const sheetParam = searchParams.get("sheet")
+      if (sheetParam) {
+        setSheet(sheetParam)
+      }
+    }
+  }, [dispatch])
   return (<main>
     <div>
       <CharacterSheet />
 
       <div className="stateManager">
-        <a href={`data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(summary))}`} download={"state.json"} className="downloadButton">
+        <a href={`data:text/json;charset=utf-8,${encodeURIComponent(summary)}`} download={sheet + ".json"} className="downloadButton">
           <button>{messages["app.downloadButton.label"]}</button>
         </a>
         <div className="uploadButton">

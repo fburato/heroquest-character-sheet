@@ -8,7 +8,7 @@ import { CharacterValues } from "./components/character_values/reducer";
 import { InventoryState, Item } from "./components/inventory/reducer";
 import { NotesState } from "./components/notes/reducer";
 import { loadAction } from "./reducer";
-import { savedState } from "./constants";
+import { getSavedState } from "./storeUtils";
 export interface SummarisedState {
     name: string,
     character: string,
@@ -149,7 +149,7 @@ const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
 
         const actionState = parseSummary(action.payload)
         if (typeof window !== "undefined") {
-            window.localStorage.setItem(savedState, JSON.stringify(actionState))
+            window.localStorage.setItem(getSavedState(), JSON.stringify(actionState))
         }
         const store: Store = {
             general: {
@@ -171,7 +171,7 @@ const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
     const calculatedState = rootReducer(state ? { ...state, summary: defaultSummary() } : undefined, action)
     const summary = summaryFromStore(calculatedState)
     if (typeof window !== "undefined") {
-        window.localStorage.setItem(savedState, JSON.stringify(summary))
+        window.localStorage.setItem(getSavedState(), JSON.stringify(summary))
     }
     const updated = {
         ...calculatedState,
@@ -184,7 +184,7 @@ const storeFromLocalStorage = (): SummarisedState => {
     if (typeof window === "undefined") {
         return defaultSummary()
     }
-    const state: string | null = window.localStorage.getItem(savedState)
+    const state: string | null = window.localStorage.getItem(getSavedState())
     //eslint-disable-next-line  @typescript-eslint/no-explicit-any
     const isItem = (value: any): boolean => {
         if (value.qty && value.description && typeof value.qty === "number" && typeof value.description === "string") {
