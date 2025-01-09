@@ -1,5 +1,5 @@
 'use client'
-import React, { FC } from "react"
+import React, { FC, useState } from "react"
 import CharacterSheet from "./components/character_sheet"
 import { Provider, useDispatch, useSelector } from "react-redux"
 import store from './store'
@@ -9,6 +9,7 @@ import { loadAction } from "./reducer"
 const App: FC<unknown> = () => {
   const summary = useSelector<{ summary: SummarisedState }>(state => state.summary)
   const dispatch = useDispatch()
+  const [fileValue, setFileValue] = useState<string>("")
   return (<main>
     <div>
       <CharacterSheet />
@@ -21,12 +22,14 @@ const App: FC<unknown> = () => {
           <label htmlFor="file" id="fileLabel" >Upload character sheet:</label>
           <input type="file" name="file" onChange={async (event) => {
             const fileList = event.target.files
-            if (fileList) {
+            if (fileList && event.target.value) {
+              setFileValue(event.target.value)
               const [file] = fileList
               const fileContent = await file.text()
               dispatch(loadAction(JSON.parse(fileContent) as SummarisedState))
+              setFileValue("")
             }
-          }} />
+          }} value={fileValue} />
         </div>
       </div>
     </div>
@@ -42,14 +45,3 @@ export default function Home() {
     </React.StrictMode>
   );
 }
-
-/*
-<input type="file" name="file" onChange={async (event) => {
-              const fileList = event.target.files
-              if (fileList) {
-                const [file] = fileList
-                const fileContent = await file.text()
-                setFileContent(JSON.parse(fileContent) as JSONValue)
-              }
-            }} />
-*/

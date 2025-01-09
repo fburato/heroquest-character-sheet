@@ -103,7 +103,10 @@ const storeFromSummary = (summary: SummarisedState): Store => {
 const summaryReducer: Reducer<Store> = (state: Store | undefined, action) => {
     if (loadAction.match(action)) {
         const actionState = action.payload
-        window.localStorage.setItem(savedState, JSON.stringify(actionState))
+        
+        if (typeof window !== "undefined") {
+            window.localStorage.setItem(savedState, JSON.stringify(actionState))
+        }
         const store: Store = {
             general: {
                 name: actionState.name ? actionState.name : "",
